@@ -2,7 +2,9 @@ import XCTest
 import Quick
 
 @testable import TaskDescriptionTests
+@testable import TaskRunnerTests
 
 QCKMain([
-    ExternalCommandSpec.self
+    ExternalCommandSpec.self,
+    TaskRunnerSpec.self
 ])

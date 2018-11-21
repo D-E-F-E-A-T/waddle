@@ -6,16 +6,15 @@ class ExternalCommandSpec: QuickSpec {
 
     override func spec() {
         describe("An External Command task") {
-            it("returns true on a zero exit code") {
-                let task = ExternalCommand(
-                    name: "succeed", command: ["true"])
-                expect(task.run()).to(beTrue())
+            it("does not throw on a zero exit code") {
+                let task = ExternalCommand(name: "succeed", command: ["true"])
+                expect { try task.run() }.toNot(throwError())
             }
 
-            it("returns false on a non-zero exit code") {
-                let task = ExternalCommand(
-                    name: "fail", command: ["false"])
-                expect(task.run()).to(beFalse())
+            it("throws nonZeroExitCode on a non-zero exit code") {
+                let task = ExternalCommand(name: "fail", command: ["false"])
+                expect { try task.run() }.to(throwError(errorType:
+                    ExternalCommandError.self))
             }
         }
     }

@@ -1,5 +1,9 @@
 import Foundation
 
+public enum ExternalCommandError: Error {
+    case nonZeroExitCode
+}
+
 /// An ExternalCommand is a task that simply invokes an external shell command.
 /// It fails if the command returns with a non-zero exit code.
 public class ExternalCommand: Task {
@@ -18,7 +22,7 @@ public class ExternalCommand: Task {
         self.dependencies = dependencies
     }
 
-    public func run() -> Bool {
+    public func run() throws {
         let task = Process()
 
         task.launchPath = "/usr/bin/env"
@@ -26,7 +30,9 @@ public class ExternalCommand: Task {
         task.launch()
         task.waitUntilExit()
 
-        return task.terminationStatus == 0
+        guard task.terminationStatus == 0 else {
+            throw ExternalCommandError.nonZeroExitCode
+        }
     }
 
 }

@@ -10,8 +10,8 @@ public protocol Task: CustomStringConvertible {
     /// need to be run first in the order specified.
     var dependencies: [String] { get }
 
-    /// Runs this task. If the task was successful and execution can continue,
-    /// true should be returned. Otherwise, if an error occurred, false should
-    /// be returned.
-    func run() -> Bool
+    /// Runs this task. If an error occurred while running this task and
+    /// execution of other tasks should not continue, then a descriptive error
+    /// should be thrown.
+    func run() throws
 }
