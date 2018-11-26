@@ -4,7 +4,6 @@ public enum TaskRunnerErrors: Error {
     case circularTaskDependency, taskNotDefined, taskFailedToExecute
 }
 
-
 /// A TaskRunner is the primary class used to consume and execute Tasks.
 public class TaskRunner {
     let tasks: [String: Task]
